@@ -124,7 +124,7 @@ if __name__ == "__main__":
     country = 'cz'
     party = 'senat'
     parliament(country+'/'+party)
-    vote_test = get('votes')
+    vote = getall('votes')
 
 
     #import time
