@@ -128,7 +128,7 @@ if __name__ == "__main__":
 
 
     #import time
-    df = pd.DataFrame(vote['_items'])
+    df = pd.DataFrame()
     #starttime = time.time()
     for item in vote:
         df_temp = pd.DataFrame([item])
