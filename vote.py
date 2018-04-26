@@ -16,6 +16,7 @@ import base64
 from datetime import datetime, date, time
 import requests
 import pytz
+import time
 
 """Visegrad+ parliament API client module.
 Contains functions for sending API requests conveniently.
@@ -126,13 +127,18 @@ if __name__ == "__main__":
     parliament(country+'/'+party)
     vote = getall('votes')
 
-
-    #import time
     df = pd.DataFrame()
-    #starttime = time.time()
-    for item in vote:
-        df_temp = pd.DataFrame([item])
-        df = df.append(df_temp)
-    
-    #endtime = time.time()
-    df.to_csv(country+'_'+party+'_vote.csv', encoding = 'utf-8-sig',index = False)
+    print(time.time())
+    threshold = 126000
+    for i in range(123000,458598):
+        df_temp = get('votes',page = i, max_results = 50)
+        df = df.append(df_temp['_items'])
+        print(i)
+        i = i+1
+        if i == threshold:
+            threshold = threshold+3000
+            df.to_csv(country+'_'+party+str(i)+'_vote_part.csv',encoding = 'utf-8-sig',index = False)
+            print(time.time())
+            df = pd.DataFrame()
+    df.to_csv(country+'_'+party+'_vote_final.csv', encoding = 'utf-8-sig',index = False)
+
